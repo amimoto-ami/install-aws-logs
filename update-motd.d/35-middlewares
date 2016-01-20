@@ -1,0 +1,24 @@
+#!/bin/sh
+nginx_ver=`rpm -q --qf '%{version}' nginx`
+hhvm_ver=`rpm -q --qf '%{version}' hhvm`
+php_ver=`rpm -q --qf '%{version}' php`
+mysql_ver=`rpm -q --qf '%{version}' Percona-Server-server-56`
+wpcli_ver=''
+if [ -f /usr/local/bin/wp ]; then
+  wpcli_ver=`/usr/local/bin/wp --allow-root --version`
+  wpcli_ver=", ${wpcli_ver}"
+fi
+if [ -f /usr/bin/wp ]; then
+  wpcli_ver=`/usr/bin/wp --allow-root --version`
+  wpcli_ver=", ${wpcli_ver}"
+fi
+
+cat << EOF
+
+ Nginx ${nginx_ver}, PHP ${php_ver}, Percona MySQL ${mysql_ver}${wpcli_ver}
+
+ amimoto     http://www.amimoto-ami.com/
+ digitalcube https://en.digitalcube.jp/
+
+EOF
+
